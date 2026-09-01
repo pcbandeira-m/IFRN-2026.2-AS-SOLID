@@ -278,3 +278,42 @@ def home(request):
     return render(request, template)
 
 
+
+class Categoria:
+
+    '''
+    Trabalha com as requisições HTTP
+    E respostas para o usuário
+    '''
+
+    def get():
+        pass
+
+    def post():
+        pass 
+
+    def put():
+        pass 
+
+    def delete()
+        pass
+
+class Produto:
+
+    '''
+    Trabalha com as requisições HTTP
+    E respostas para o usuário
+    '''
+
+    def get():
+        pass
+
+    def post():
+        pass 
+
+    def put():
+        pass 
+
+    def delete()
+        pass
+
