@@ -7,6 +7,8 @@ from django.urls import reverse
 
 import sqlite3
 
+from . services import CategoriaService, ProdutoService
+
 
 # formulario utilizado para edicao de registros de categorias
 class CategoriaForm(forms.Form):
@@ -279,41 +281,71 @@ def home(request):
 
 
 
-class Categoria:
+class CategoriaViews:
 
     '''
     Trabalha com as requisições HTTP
     E respostas para o usuário
     '''
 
-    def get():
-        pass
+    def __init__(self, service:CategoriaService):
+        self.conexao_service = service
 
-    def post():
-        pass 
+        
+    def get(self,request, id=None):
 
-    def put():
-        pass 
+        if id:
+            categoria = self.service.ixibir_por_id(id)
+            return render(request,'categorias_editar.html',{'registro': categoria})
 
-    def delete()
-        pass
+        categoria = self.service.exibir()
+        return render(request,'categorias_listar.html',{'registros':categoria})
 
-class Produto:
+    def post(self, request):
+
+        descricao = request.POST.get('descricao')
+        self.service.salvar(descricao)
+        return HttpResponseRedirect(reverse("categorias"))
+        
+
+    def put(self, request):
+
+        descricao = request.PUT.get('descricao')
+        self.service.alterar(id, descricao)
+        return HttpResponseRedirect(reverse("categorias"))
+ 
+
+    def delete(self, request, id):
+
+        descricao = request.DELETE.get('descricao')
+        self.service.excluir(id)
+        return HttpResponseRedirect(reverse("categorias"))
+
+class ProdutoViews:
 
     '''
     Trabalha com as requisições HTTP
     E respostas para o usuário
     '''
+    def __init__(self, produto:ProdutoService):
+        self.produto = produto
 
-    def get():
+    def get(self, request, id=None):
+
+        if id:
+    
+            produto = self.produto.ixibir_por_id(id)
+            return render(request,'produtos_lista.html',{'registro':produto})
+
+        produto = self.service.exibir()
+        return render(request,'produtos_listar.html',{'registro':produto})
+
+    def post(self, request):
         pass
-
-    def post():
-        pass 
 
     def put():
         pass 
 
-    def delete()
+    def delete():
         pass
 

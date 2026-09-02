@@ -1,60 +1,50 @@
-from django import forms
 
-
-class CategoriaService(forms.Form):
+class CategoriaService():
 
     '''
     Trabalha com as regras de negócio persistência 
     no bancos de dados usando comandos SQL.
     '''
 
-    id = forms.IntegerField(label='ID', widget=forms.TextInput(attrs{'readonly':'readonly'}), required = False)
-    descricao = forms.CharField(label= 'Descrição', max_length=30, required=True)
-
-    exibir():
+    def exibir():
         pass 
-    
-    incluir():
-        pass
-    
-    excluir():
-        pass
 
-    alterar():
+    def exibir_por_id():
         pass
     
-    salvar():
+    def incluir():
+        pass
+    
+    def excluir():
+        pass
+
+    def alterar():
         pass
 
 
-class ProdutoService(forms.Form):
+class ProdutoService():
 
     '''
     Trabalha com as regras de negócio persistência 
     no bancos de dados usando comandos SQL.
     '''
 
-    id = forms.IntegerField(label='ID', widget=forms.TextInput(attrs{'readonly':'readonly'}, required=False))
-    descricao = forms.CharField(label='Descrição', max_length=30, required=True)
-    preco_unitario = forms.DecimalField(label='Preço Unitário', max_digits=10, decimal_places=2, required=True)
-    quantidade_estoque = forms.IntegerField(label='Qtd. Estoque', required=True)
-    categoria_id = forms.CharField(label='Categoria', required=True)
 
-
-    exibir():
+    def exibir():
         pass 
-    
-    incluir():
+
+    def exibir_por_id():
         pass
     
-    excluir():
+    def incluir():
+        pass
+    
+    def excluir():
         pass
 
-    alterar():
+    def alterar():
         pass
     
-    salvar():
-        pass
 
 class ConexaoService:
 
@@ -62,6 +52,6 @@ class ConexaoService:
     Faz a conexão com o Banco de dados
     '''
 
-    conexao():
+    def conexao():
         pass
 
