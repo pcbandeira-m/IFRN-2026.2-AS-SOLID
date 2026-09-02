@@ -307,20 +307,19 @@ class CategoriaViews:
     def post(self, request):
 
         descricao = request.POST.get('descricao')
-        self.service.salvar(descricao)
+        self.service.incluir(descricao)
         return HttpResponseRedirect(reverse("categorias"))
         
 
     def put(self, request):
 
         descricao = request.PUT.get('descricao')
-        self.service.alterar(id, descricao)
+        self.service.alterar(descricao)
         return HttpResponseRedirect(reverse("categorias"))
  
 
-    def delete(self, request, id):
+    def delete(self, id):
 
-        descricao = request.DELETE.get('descricao')
         self.service.excluir(id)
         return HttpResponseRedirect(reverse("categorias"))
 
@@ -373,7 +372,7 @@ class ProdutoViews:
         return HttpResponseRedirect(reverse("produtos"))
         
 
-    def delete(self, request, id):
+    def delete(self, id):
 
         self.produto.excluir(id)
         return HttpResponseRedirect(reverse("produtos"))
