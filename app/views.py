@@ -279,6 +279,9 @@ def home(request):
     template = 'home.html'
     return render(request, template)
 
+# ======================= Atividade ==============================
+# ======================= Atividade ==============================
+# ======================= Atividade ==============================
 
 
 class CategoriaViews:
@@ -341,11 +344,37 @@ class ProdutoViews:
         return render(request,'produtos_listar.html',{'registro':produto})
 
     def post(self, request):
-        pass
 
-    def put():
-        pass 
+        dados = {
+            'id': request.POST.get('id'),
+            'descricao':request.POST.get('descricao'),
+            'preco_unitario':request.POST.get('preco_unitario'),
+            'quantidade_estoque':request.POST.get('quantidade_estoque'),
+            'categoria':request.POST.get('categoria'),
+            'acao':request.POST.get('acao')
+        }
 
-    def delete():
-        pass
+        self.produto.incluir(dados)
+        return HttpResponseRedirect(reverse("produtos"))
+
+
+    def put(self, request, id):
+
+        dados = {
+                'id':id,
+                'desicao': request.PUT.get('descricao'),
+                'preco_unitario': request.PUT.get('preco_unitario'),
+                'quantidade_estoque':request.PUT.get('quantidade_estoque'),
+                'categoria':request.PUT.get('categoria'),
+                'acao':request.PUT.get('acao')
+                 }
+
+        self.produto.alterar(dados)
+        return HttpResponseRedirect(reverse("produtos"))
+        
+
+    def delete(self, request, id):
+
+        self.produto.excluir(id)
+        return HttpResponseRedirect(reverse("produtos"))
 
