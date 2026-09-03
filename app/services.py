@@ -15,15 +15,15 @@ class ConexaoService:
         return conexao
     
 
-class CategoriaService():
+class CategoriaService:
 
     '''
     Trabalha com as regras de negócio persistência 
     no bancos de dados usando comandos SQL.
     '''
 
-    def __init__(self, conexao: ConexaoService):
-        self.conexao = conexao.conexao()
+    def __init__(self):
+        self.conexao = ConexaoService().conexao()
     
     def exibir(self):
         sql = '''
@@ -37,7 +37,7 @@ class CategoriaService():
         return self.conexao.cursor().execute(sql).fetchall()
 
     def exibir_por_id(self, id):
-        sql = '''
+        sql = f'''
                 SELECT  id, 
                         descricao 
                 FROM Categoria 
@@ -75,15 +75,15 @@ class CategoriaService():
         self.conexao.commit()
 
 
-class ProdutoService():
+class ProdutoService:
 
     '''
     Trabalha com as regras de negócio persistência 
     no bancos de dados usando comandos SQL.
     '''
 
-    def __init__(self, conexao: ConexaoService):
-        self.conexao = conexao.conexao()
+    def __init__(self):
+        self.conexao = ConexaoService().conexao()
 
     def exibir(self):
         # define o comando SQL que será executado
