@@ -5,8 +5,6 @@ from django.shortcuts import render
 from django import forms
 from django.urls import reverse
 
-import sqlite3
-
 from . services import CategoriaService, ProdutoService
 
 
@@ -292,13 +290,13 @@ class CategoriaViews:
     '''
 
     def __init__(self, service:CategoriaService):
-        self.conexao_service = service
+        self.service = service
 
         
     def get(self,request, id=None):
 
         if id:
-            categoria = self.service.ixibir_por_id(id)
+            categoria = self.service.exibir_por_id(id)
             return render(request,'categorias_editar.html',{'registro': categoria})
 
         categoria = self.service.exibir()
@@ -311,10 +309,10 @@ class CategoriaViews:
         return HttpResponseRedirect(reverse("categorias"))
         
 
-    def put(self, request):
+    def put(self, request, id):
 
         descricao = request.PUT.get('descricao')
-        self.service.alterar(descricao)
+        self.service.alterar(id, descricao)
         return HttpResponseRedirect(reverse("categorias"))
  
 
@@ -335,8 +333,7 @@ class ProdutoViews:
     def get(self, request, id=None):
 
         if id:
-    
-            produto = self.produto.ixibir_por_id(id)
+            produto = self.produto.exibir_por_id(id)
             return render(request,'produtos_lista.html',{'registro':produto})
 
         produto = self.service.exibir()
