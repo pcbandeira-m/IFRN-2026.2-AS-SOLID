@@ -41,8 +41,8 @@ urlpatterns = [
     #   - categorias/salvar/       : insere, altera ou exclui um registro do BD
     # 
     path('categorias/', views.CategoriaView.as_view(), name='categorias'),
-    path('categorias/<str:acao>/', views.CategoriaView.as_view(), name='categorias' ), 
-    path('categorias/<str:acao>/<int:id>/', views.CategoriaView.as_view(), name='categorias'),
+    path('categorias/incluir/', views.CategoriaView.as_view(), {'acao': 'incluir'}, name='categoria_incluir'),
+    path('categorias/<int:id>/', views.CategoriaView.as_view(), name='categoria_detalhe'),
 
     # ===========================================================================
     # Rotas: PRODUTO

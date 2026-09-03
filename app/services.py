@@ -37,15 +37,15 @@ class CategoriaService:
         return self.conexao.cursor().execute(sql).fetchall()
 
     def exibir_por_id(self, id):
-        sql = f'''
+        sql = '''
                 SELECT  id, 
                         descricao 
                 FROM Categoria 
-                WHERE id={id}
+            WHERE id = ?
             '''
 
         # cria um cursor(), executa o SELECT para retornar o registro pelo ID
-        registro = self.conexao.cursor().execute(sql).fetchone()
+        registro = self.conexao.cursor().execute(sql, (id,)).fetchone()
         registro_dict = {'id': registro[0], 'descricao': registro[1]}
         return registro_dict
 

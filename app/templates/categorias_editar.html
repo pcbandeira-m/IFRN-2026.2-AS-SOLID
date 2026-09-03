@@ -6,7 +6,7 @@
 
 {% block conteudo %}
 
-<form action="/categorias/salvar/" method="post">
+<form action="{% if form.id.value %}{% url 'categoria_detalhe' id=form.id.value %}{% else %}{% url 'categorias' %}{% endif %}" method="post">
 
     {% csrf_token %}
 

@@ -10,7 +10,7 @@
 
     {% csrf_token %}
 
-    <input id="acao" name="acao" type="hidden" value="{{ acao }}">
+    <input id="acao" name="acao" type="hidden"">
     
     {% if acao == 'Exclusão' %}
         <p>Deseja realmente excluir este registro?</p>

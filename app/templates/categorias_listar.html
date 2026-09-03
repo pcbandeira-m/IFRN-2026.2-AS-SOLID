@@ -7,7 +7,7 @@
 {% block conteudo %}
 
     <div style="margin-left: 5px;">
-        <a class="btn medium" href="{% url 'categorias' acao='incluir'  %}">Incluir</a>
+        <a class="btn medium" href="{% url 'categoria_incluir' %}">Incluir</a>
     </div>
 
     <!-- TABELA HTML COM OS REGISTROS -->
@@ -28,9 +28,13 @@
                 <td class="id">{{ reg.0 }}</td>
                 <td>{{ reg.1 }}</td>
                 <td>
-                    <a class="btn small" href="{% url 'categorias' acao='alterar' id=reg.0 %}">Alterar</a>
-                    
-                    <a class="btn-del small" href="{% url 'categorias' acao='excluir' id=reg.0 %}">Excluir</a>
+                    <a class="btn small" href="{% url 'categoria_detalhe' id=reg.0 %}">Alterar</a>
+
+                    <form action="{% url 'categoria_detalhe' id=reg.0 %}" method="post" style="display: inline;">
+                        {% csrf_token %}
+                        <input type="hidden" name="acao" value="Exclusão">
+                        <button class="btn-del small" type="submit">Excluir</button>
+                    </form>
                 </td>
             </tr>
             {% endfor %}
