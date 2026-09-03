@@ -322,29 +322,28 @@ class CategoriaView(View):
     def post(self, request, acao=None):
 
         acao_form = request.POST.get('acao')
-        descricao = request.POST.get('descricao')
-        id = request.POST.get('id')
 
         if acao_form == 'Inclusão':
-            self.service.incluir(descricao)
+            self._incluir(request)
         elif acao_form == 'Alteração':
-            self.service.alterar(id, descricao)
+            self._alterar(request)
         elif acao_form == 'Exclusão':
-            self.service.excluir(id)
+            self._excluir(request)
         return HttpResponseRedirect(reverse("categorias"))
-        
 
-    def put(self, request, id, acao=None):
+    def _incluir(self, request):
+        self.service.incluir(request.POST.get('descricao'))
 
-        descricao = request.PUT.get('descricao')
-        self.service.alterar(id, descricao)
-        return HttpResponseRedirect(reverse("categorias"))
+    def _alterar(self, request):
+        self.service.alterar(
+            request.POST.get('id'),
+            request.POST.get('descricao'),
+        )
+
+    def _excluir(self, request):
+        self.service.excluir(request.POST.get('id'))
+
  
-
-    def delete(self, request, id, acao=None):
-
-        self.service.excluir(id)
-        return HttpResponseRedirect(reverse("categorias"))
 
 
 class ProdutoForm(forms.Form):
@@ -390,42 +389,35 @@ class ProdutoView(View):
     def post(self, request, acao=None):
 
         acao_form = request.POST.get('acao')
-        id = request.POST.get('id')
 
         if acao_form == 'Exclusão':
-            self.produto.excluir(id)
-        else:
-            dados = {
-                'id': id,
-                'descricao': request.POST.get('descricao'),
-                'preco_unitario': request.POST.get('preco_unitario'),
-                'quantidade_estoque': request.POST.get('quantidade_estoque'),
-                'categoria_id': request.POST.get('categoria_id'),
-            }
-
-            if acao_form == 'Alteração':
-                self.produto.alterar(dados)
-            else:
-                self.produto.incluir(dados)
+            self._excluir(request)
+        elif acao_form == 'Alteração':
+            self._alterar(request)
+        elif acao_form == 'Inclusão':
+            self._incluir(request)
         return HttpResponseRedirect(reverse("produtos"))
 
-
-    def put(self, request, id, acao=None):
-
+    def _incluir(self, request):
         dados = {
-                'id':id,
-                'descricao': request.PUT.get('descricao'),
-                'preco_unitario': request.PUT.get('preco_unitario'),
-                'quantidade_estoque':request.PUT.get('quantidade_estoque'),
-                'categoria_id':request.PUT.get('categoria_id'),
-                'acao':request.PUT.get('acao')
-                 }
+            'descricao': request.POST.get('descricao'),
+            'preco_unitario': request.POST.get('preco_unitario'),
+            'quantidade_estoque': request.POST.get('quantidade_estoque'),
+            'categoria_id': request.POST.get('categoria_id'),
+        }
+        self.produto.incluir(dados)
 
+    def _alterar(self, request):
+        dados = {
+            'id': request.POST.get('id'),
+            'descricao': request.POST.get('descricao'),
+            'preco_unitario': request.POST.get('preco_unitario'),
+            'quantidade_estoque': request.POST.get('quantidade_estoque'),
+            'categoria_id': request.POST.get('categoria_id'),
+        }
         self.produto.alterar(dados)
-        return HttpResponseRedirect(reverse("produtos"))
-        
 
-    def delete(self, request, id, acao=None):
+    def _excluir(self, request):
+        self.produto.excluir(request.POST.get('id'))
 
-        self.produto.excluir(id)
-        return HttpResponseRedirect(reverse("produtos"))
+
