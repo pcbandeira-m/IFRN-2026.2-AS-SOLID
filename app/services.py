@@ -15,15 +15,15 @@ class ConexaoService:
         return conexao
     
 
-class CategoriaService():
+class CategoriaService:
 
     '''
     Trabalha com as regras de negócio persistência 
     no bancos de dados usando comandos SQL.
     '''
 
-    def __init__(self, conexao: ConexaoService):
-        self.conexao = conexao.conexao()
+    def __init__(self):
+        self.conexao = ConexaoService().conexao()
     
     def exibir(self):
         sql = '''
@@ -37,7 +37,7 @@ class CategoriaService():
         return self.conexao.cursor().execute(sql).fetchall()
 
     def exibir_por_id(self, id):
-        sql = '''
+        sql = f'''
                 SELECT  id, 
                         descricao 
                 FROM Categoria 
@@ -75,15 +75,15 @@ class CategoriaService():
         self.conexao.commit()
 
 
-class ProdutoService():
+class ProdutoService:
 
     '''
     Trabalha com as regras de negócio persistência 
     no bancos de dados usando comandos SQL.
     '''
 
-    def __init__(self, conexao: ConexaoService):
-        self.conexao = conexao.conexao()
+    def __init__(self):
+        self.conexao = ConexaoService().conexao()
 
     def exibir(self):
         # define o comando SQL que será executado
@@ -133,42 +133,49 @@ class ProdutoService():
         return registro_dict
     
     def incluir(self, dados):
-        sql = f'''
+        sql = '''
                     INSERT INTO Produto (
-                        descricao, 
-                        preco_unitario, 
-                        quantidade_estoque, 
+                        descricao,
+                        preco_unitario,
+                        quantidade_estoque,
                         categoria_id
-                    )
-                    VALUES(
-                        '{dados['descricao']}', 
-                        {dados['preco_unitario']}, 
-                        {dados['quantidade_estoque']}, 
-                        {dados['categoria_id']}
-                    );
+                    ) VALUES (?, ?, ?, ?)
                 '''
+        parametros = (
+            dados['descricao'],
+            dados['preco_unitario'],
+            dados['quantidade_estoque'],
+            dados['categoria_id'],
+        )
 
         # cria um cursor() e executa o SQL informado
-        self.conexao.cursor().execute(sql)
+        self.conexao.cursor().execute(sql, parametros)
         self.conexao.commit()
     
     def excluir(self, id):
-        sql = f"DELETE FROM Produto WHERE id = {'id'}"
+        sql = "DELETE FROM Produto WHERE id = ?"
 
         # cria um cursor() e executa o SQL informado
-        self.conexao.cursor().execute(sql)
+        self.conexao.cursor().execute(sql, (id,))
         self.conexao.commit()
 
     def alterar(self, dados):
-        sql = f'''
+        sql = '''
                     UPDATE Produto 
-                    SET descricao = '{dados['descricao']}', 
-                        preco_unitario = {dados['preco_unitario']}, 
-                        quantidade_estoque = {dados['quantidade_estoque']}, 
-                        categoria_id = {dados['categoria_id']} 
-                    WHERE id = {dados['id']}
+                    SET descricao = ?,
+                        preco_unitario = ?,
+                        quantidade_estoque = ?,
+                        categoria_id = ?
+                    WHERE id = ?
                 '''
+        parametros = (
+            dados['descricao'],
+            dados['preco_unitario'],
+            dados['quantidade_estoque'],
+            dados['categoria_id'],
+            dados['id'],
+        )
 
         # cria um cursor() e executa o SQL informado
-        self.conexao.cursor().execute(sql)
+        self.conexao.cursor().execute(sql, parametros)
         self.conexao.commit()

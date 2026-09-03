@@ -40,9 +40,9 @@ urlpatterns = [
     #   - categorias/excluir/<id>/ : exibe a página de exclusao de registro
     #   - categorias/salvar/       : insere, altera ou exclui um registro do BD
     # 
-    path('categorias/', views.categorias, name='categorias'),
-    path('categorias/<str:acao>/', views.categorias, name='categorias' ), 
-    path('categorias/<str:acao>/<int:id>/', views.categorias, name='categorias'),
+    path('categorias/', views.CategoriaView.as_view(), name='categorias'),
+    path('categorias/<str:acao>/', views.CategoriaView.as_view(), name='categorias' ), 
+    path('categorias/<str:acao>/<int:id>/', views.CategoriaView.as_view(), name='categorias'),
 
     # ===========================================================================
     # Rotas: PRODUTO
@@ -53,9 +53,9 @@ urlpatterns = [
     #   - produtos/salvar/       : insere, altera ou exclui um registro do BD
     # 
     # 
-    path('produtos/', views.produtos, name='produtos'),
-    path('produtos/<str:acao>/', views.produtos, name='produtos' ), 
-    path('produtos/<str:acao>/<int:id>/', views.produtos, name='produtos'),
+    path('produtos/', views.ProdutoView.as_view(), name='produtos'),
+    path('produtos/<str:acao>/', views.ProdutoView.as_view(), name='produtos' ), 
+    path('produtos/<str:acao>/<int:id>/', views.ProdutoView.as_view(), name='produtos'),
 
 ] 
 
